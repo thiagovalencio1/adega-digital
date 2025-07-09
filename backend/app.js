@@ -1,41 +1,44 @@
-﻿const express = require('express');
+const express = require('express');
 const fileUpload = require('express-fileupload');
 const axios = require('axios');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
+app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(fileUpload());
-app.use(express.static('frontend'));
+app.use(express.json());
 
-app.post('/upload', async (req, res) => {
-  if (!req.files || !req.files.file) {
-    return res.status(400).send('Nenhum arquivo enviado.');
-  }
-
-  const file = req.files.file;
-  const apiKey = process.env.OCR_API_KEY;
-
-  const formData = new FormData();
-  formData.append('file', file.data, file.name);
-
+app.post('/ocr', async (req, res) => {
   try {
-    const ocrResponse = await axios.post('https://api.ocr.space/parse/image',
-      formData,
-      {
-        headers: {
-          apikey: apiKey,
-          ...formData.getHeaders(),
-        },
-      }
-    );
-    res.json(ocrResponse.data);
+    if (!req.files || !req.files.image) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const image = req.files.image;
+
+    const formData = new FormData();
+    formData.append('apikey', process.env.OCR_API_KEY);
+    formData.append('language', 'eng');
+    formData.append('isOverlayRequired', 'false');
+    formData.append('file', image.data, {
+      filename: image.name,
+      contentType: image.mimetype,
+    });
+
+    const response = await axios.post('https://api.ocr.space/parse/image', formData, {
+      headers: formData.getHeaders(),
+    });
+
+    res.json(response.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Erro ao processar OCR.');
+    console.error('OCR error:', error);
+    res.status(500).json({ error: 'OCR processing failed' });
   }
 });
 
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
