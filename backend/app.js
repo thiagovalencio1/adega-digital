@@ -7,7 +7,8 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(__dirname)); // Agora serve index.html do backend/
+
 app.use(fileUpload());
 app.use(express.json());
 
