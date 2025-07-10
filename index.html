@@ -2,26 +2,27 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Adega Digital</title>
+  <title>Minha Adega Digital</title>
 </head>
 <body>
   <h1>🍷 Minha Adega Digital</h1>
 
   <h2>📸 Identificar Vinho</h2>
-  <input type="file" id="fileInput" />
-  <button onclick="uploadImage()">Identificar Vinho</button>
-  <div id="ocrResult"></div>
+  <form id="wineForm">
+    <input type="file" id="wineImage" />
+    <button type="submit">Identificar Vinho</button>
+  </form>
 
   <h2>🍽️ Harmonização</h2>
-  <input type="text" id="pratoInput" placeholder="Ex: macarrão com molho branco" />
-  <button onclick="harmonizar()">Buscar Harmonização</button>
-  <div id="harmonizacaoResult"></div>
+  <form id="pairingForm">
+    <input type="text" id="prato" placeholder="Digite o prato" />
+    <button type="submit">Buscar Harmonização</button>
+  </form>
+  <p id="sugestao">Sugestão: Sem resposta</p>
 
   <h2>🍾 Minha Adega</h2>
-  <button onclick="verEstoque()">Ver Estoque</button>
-  <div id="estoqueResult"></div>
+  <button onclick="alert('Em breve: sua lista de vinhos!')">Ver Estoque</button>
 
   <script src="app.js"></script>
 </body>
 </html>
-
