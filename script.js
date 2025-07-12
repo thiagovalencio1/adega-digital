@@ -1,8 +1,8 @@
 const OCR_API_KEY = 'K82997674988957';
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzfaQnOcgzXJDqU-Fw3xiQhkbKrJ1--oJc0lPuDEkB0f4EDbacGmOwgP7KYUSiYTJbJ/exec';
 
-async function identifyWine() {
+async function identifyWine( ) {
   const fileInput = document.getElementById('fileInput');
   const file = fileInput.files[0];
   if (!file) return alert('Selecione uma imagem.');
@@ -14,7 +14,7 @@ async function identifyWine() {
     method: 'POST',
     headers: { apikey: OCR_API_KEY },
     body: formData
-  });
+  } );
   const ocrData = await ocrRes.json();
   const parsedText = ocrData.ParsedResults[0].ParsedText;
 
@@ -30,7 +30,7 @@ async function identifyWine() {
         role: "user",
         content: `Extraia informações do vinho e sugira harmonizações: ${parsedText}`
       }]
-    })
+    } )
   });
   const gptData = await gptRes.json();
   const wineInfo = gptData.choices[0].message.content;
@@ -81,11 +81,10 @@ async function harmonizeDish() {
         role: "user",
         content: `Sugira qual destes vinhos combina melhor com ${dish}: ${wines}`
       }]
-    })
+    } )
   });
   const gptData = await gptRes.json();
   document.getElementById('harmonization').innerText = gptData.choices[0].message.content;
 }
 
 window.onload = loadAdega;
-
