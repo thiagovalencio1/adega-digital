@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>🍷 Minha Adega Virtual</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🍷 Minha Adega Virtual</h1>
+
+  <h2>Identificar Vinho</h2>
+  <input type="file" id="fileInput" />
+  <button onclick="identifyWine()">Identificar Vinho</button>
+  <div id="response"></div>
+
+  <h2>Minha Adega</h2>
+  <ul id="adegaList"></ul>
+
+  <h2>Harmonizar Prato</h2>
+  <input type="text" id="dishInput" placeholder="Digite o prato" />
+  <button onclick="harmonizeDish()">Buscar Harmonização</button>
+  <div id="harmonization"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
